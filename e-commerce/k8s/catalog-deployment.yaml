@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog-api-pod
+  template:
+    metadata:
+      labels:
+        app: catalog-api-pod
+    spec:
+      containers:
+        - name: catalog-api-container
+          image: ecommerce-catalog-api:latest
+          ports:
+            - containerPort: 5100
+          env:
+            - name: ConnectionStrings__CatalogDatabase
+              value: Host=postgres-db;Port=5432;Database=ecommerce_catalog;Username=postgres;Password=postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-api-service
+spec:
+  selector:
+    app: catalog-api-pod
+  ports:
+    - port: 5100
+      targetPort: 5100
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-api-deployment1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog-api-pod1
+  template:
+    metadata:
+      labels:
+        app: catalog-api-pod1
+    spec:
+      containers:
+        - name: catalog-api-container1
+          image: ecommerce-catalog-api:latest
+          ports:
+            - containerPort: 5100
+          env:
+            - name: ConnectionStrings__CatalogDatabase
+              value: Host=postgres-db;Port=5432;Database=ecommerce_catalog;Username=postgres;Password=postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-api-service1
+spec:
+  selector:
+    app: catalog-api-pod1
+  ports:
+    - port: 5100
+      targetPort: 5100
+  type: ClusterIP
+

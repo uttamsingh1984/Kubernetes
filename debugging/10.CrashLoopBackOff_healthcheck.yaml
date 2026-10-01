@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static-web
+  template:
+    metadata:
+      labels:
+        app: static-web
+    spec:
+      containers:
+      - name: static-web-container
+        image: httpd
+        livenessProbe:
+         initialDelaySeconds: 30
+         periodSeconds: 5
+         timeoutSeconds: 10
+         exec:
+            command:
+            - ls
+            - /tmp/lp
+        ports:
+        - containerPort: 80

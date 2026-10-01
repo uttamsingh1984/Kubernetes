@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run Frontend",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Backend Solution",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build", "e-commerce.slnx"],
+      "problemMatcher": ["$msCompile"]
+    }
+  ]
+}

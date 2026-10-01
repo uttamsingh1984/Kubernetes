@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static-web
+  template:
+    metadata:
+      labels:
+        app: static-web
+    spec:
+      initContainers:
+      - name: install
+        image: busybox:1.28
+        command: ["exit 1"]
+      containers:
+      - name: static-web-container
+        image: static-web:latest
+        ports:
+        - containerPort: 80

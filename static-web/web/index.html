@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shivansh Scating</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <a href="index.html" class="brand">Shivansh Scating</a>
+        <div class="nav-links">
+          <a href="index.html" class="active">Home</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <h1>Shivansh Scating</h1>
+        <p>Discover bold skate style with premium skating shoes and street-ready fashion.</p>
+        <a href="about.html" class="button">Explore More</a>
+
+        <div id="server-info" class="server-card" aria-live="polite">
+          <p><strong>Pod Name:</strong> <span id="pod-name">Loading...</span></p>
+          <p><strong>Container Name:</strong> <span id="container-name">Loading...</span></p>
+          <p><strong>Server IP:</strong> <span id="server-ip">Loading...</span></p>
+          <p><strong>Requested At:</strong> <span id="request-time">Loading...</span></p>
+        </div>
+
+        <div class="gallery">
+          <img src="resources/skate-shoe-1.svg" alt="Stylish skate shoes" />
+          <img src="resources/skate-shoe-2.svg" alt="Skateboarding shoes close-up" />
+          <img src="resources/skate-shoe-3.svg" alt="Skater with shoes" />
+        </div>
+      </section>
+    </main>
+
+    <script>
+      async function loadServerInfo() {
+        try {
+          const response = await fetch('/server-info.json');
+          const data = await response.json();
+          document.getElementById('pod-name').textContent = data.podName || 'Unknown';
+          document.getElementById('container-name').textContent = data.containerName || 'Unknown';
+          document.getElementById('server-ip').textContent = data.serverIp || 'Unknown';
+          document.getElementById('request-time').textContent = new Date().toLocaleString();
+        } catch (error) {
+          document.getElementById('pod-name').textContent = 'Unavailable';
+          document.getElementById('container-name').textContent = 'Unavailable';
+          document.getElementById('server-ip').textContent = 'Unavailable';
+          document.getElementById('request-time').textContent = new Date().toLocaleString();
+        }
+      }
+
+      loadServerInfo();
+      setInterval(loadServerInfo, 1000);
+    </script>
+  </body>
+</html>
